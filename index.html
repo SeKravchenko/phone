@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Поділитися номером</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  body { margin:0; font-family:sans-serif; display:flex; flex-direction:column;
+         align-items:center; justify-content:center; min-height:100vh; text-align:center;
+         background:var(--tg-theme-bg-color,#fff); color:var(--tg-theme-text-color,#000); }
+  button { font-size:20px; padding:16px 28px; border:0; border-radius:12px;
+           background:var(--tg-theme-button-color,#2aabee); color:var(--tg-theme-button-text-color,#fff); }
+  p { padding:0 20px; }
+</style>
+</head>
+<body>
+<p>Натисніть кнопку, щоб поділитися номером телефону</p>
+<button id="b">📱 Поділитися номером</button>
+<p id="s"></p>
+<script>
+  const tg = window.Telegram.WebApp;
+  tg.ready();
+  tg.expand();
+  document.getElementById('b').onclick = function () {
+    tg.requestContact(function (ok) {
+      if (ok) {
+        document.getElementById('s').textContent = 'Дякуємо! Номер надіслано.';
+        setTimeout(function () { tg.close(); }, 800);
+      } else {
+        document.getElementById('s').textContent = 'Номер не надіслано. Спробуйте ще раз.';
+      }
+    });
+  };
+</script>
+</body>
+</html>
